@@ -1,13 +1,123 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React</title>
-  </head>
-  <body>
-    <div id="root"></div>
-    <script type="module" src="/src/main.jsx"></script>
-  </body>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Instachef AI</title>
+  <style>
+    /* Reset and basic styles */
+    * { margin: 0; padding: 0; box-sizing: border-box; font-family: Arial, sans-serif; }
+    body { display: flex; justify-content: center; align-items: center; height: 100vh; background: linear-gradient(135deg, #ffafbd, #ffc3a0); color: #333; }
+    .container { max-width: 600px; width: 90%; padding: 20px; background-color: #fff; box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2); border-radius: 10px; text-align: center; }
+
+    /* Header */
+    h1 { font-size: 2.5em; margin-bottom: 20px; color: #ff5f6d; }
+    p { font-size: 1.1em; color: #666; margin-bottom: 20px; }
+
+    /* Buttons Container */
+    .top-right-buttons {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      display: flex;
+      gap: 10px;
+      z-index: 1000;
+    }
+
+    /* Button Styles */
+    .button {
+      padding: 8px 16px;
+      background-color: #4CAF50;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      font-size: 1em;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    .button:hover { background-color: #45a049; }
+    .signout-button {
+      background-color: #ff5f6d;
+    }
+    .signout-button:hover { background-color: #ff7b81; }
+
+    /* Form */
+    .input-group { margin: 10px 0; }
+    .input-group label { font-size: 1em; color: #333; }
+    .input-group input[type="text"] {
+      width: 100%; padding: 12px; border: 1px solid #ddd; border-radius: 5px;
+      font-size: 1em; margin-top: 8px;
+    }
+    .submit-btn {
+      background-color: #ff5f6d; color: #fff; padding: 12px 20px;
+      border: none; border-radius: 5px; font-size: 1.1em;
+      cursor: pointer; transition: background 0.3s;
+    }
+    .submit-btn:hover { background-color: #ff8171; }
+
+    /* Recipe section */
+    .recipe-results { margin-top: 20px; }
+    .recipe { display: inline-block; width: 100%; padding: 10px; text-align: left; background-color: #ffe6e9; border-radius: 8px; margin: 10px 0; }
+    .recipe h2 { color: #ff5f6d; font-size: 1.5em; margin-bottom: 10px; }
+
+    /* Animation */
+    @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+    .container { animation: fadeIn 1s ease-in-out; }
+
+  </style>
+</head>
+<body>
+
+<div class="top-right-buttons">
+  <button class="button" onclick="navigateToProfile()">Profile</button>
+  <button class="button signout-button" onclick="signOut()">Sign Out</button>
+</div>
+
+<div class="container">
+  <h1>Instachef AI</h1>
+  <p>Enter your ingredients, and our AI will serve up amazing recipes!</p>
+
+  <div class="input-group">
+    <label for="ingredients">Ingredients (comma-separated):</label>
+    <input type="text" id="ingredients" placeholder="e.g., chicken, garlic, rice">
+  </div>
+  
+  <button class="submit-btn" onclick="generateRecipes()">Get Recipes</button>
+  
+  <div class="recipe-results" id="recipe-results"></div>
+</div>
+
+<script>
+  function navigateToProfile() {
+    window.location.href = "/profile"; // Redirect to profile page
+  }
+
+  function  handleSignOut() {
+    // Sign-out logic here
+    signOut(); // Call the actual sign-out function from AWS
+    alert("You have signed out.");
+  }
+
+  function generateRecipes() {
+    const resultsDiv = document.getElementById('recipe-results');
+    resultsDiv.innerHTML = '';  // Clear previous results
+
+    // Demo recipe output (replace with actual backend call for AI-generated recipes)
+    const recipes = [
+      { name: "Garlic Chicken Stir Fry", ingredients: "Chicken, Garlic, Vegetables, Rice" },
+      { name: "Spicy Garlic Fried Rice", ingredients: "Rice, Garlic, Chili, Soy Sauce" },
+    ];
+
+    recipes.forEach(recipe => {
+      const recipeDiv = document.createElement('div');
+      recipeDiv.className = 'recipe';
+      recipeDiv.innerHTML = `<h2>${recipe.name}</h2><p>Ingredients: ${recipe.ingredients}</p>`;
+      resultsDiv.appendChild(recipeDiv);
+    });
+  }
+</script>
+
+</body>
 </html>
+
+
